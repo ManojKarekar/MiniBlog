@@ -1,0 +1,18 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% static 'blog/CSS/style.css' %}
+{% block content %}
+        <div class="col-sm-10 main ">
+            <h2 class="my-5 text-center">Home page</h2>
+
+            {% for post in posts  %}
+            <div class="jumbo-container my-5 ">
+                
+                <h3 class="container-title">{{post.title}}</h3>
+                <div class="container-discription">{{post.desc}}</div>
+              
+            </div>
+            {% endfor %}
+
+        </div>    
+{% endblock content %}

@@ -1,0 +1,13 @@
+    body {
+        background-color: rgb(75, 74, 74);
+        color: aliceblue;
+    }
+    
+    .jumbo-container {
+        background-color: rgb(90, 94, 99);
+        padding: 10px;
+    }
+    
+    .about-description {
+        background-color: rgb(90, 94, 99);
+    }

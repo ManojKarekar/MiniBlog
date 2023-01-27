@@ -1,0 +1,81 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% static 'blog/CSS/style.css' %}
+
+{% block msg %}
+          
+          {% if messages %}
+          {% for message  in messages  %}
+            <div {% if message.tags %} class="alert alert-danger {{message.tags}} alert-dismissible fade show " {% endif %}>
+
+                <strong>{{message}}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">&times;</button>
+            </div>
+          {% endfor %}     
+          {% endif %}
+     
+{% endblock msg %}
+
+{% block side %}
+<div class="col-sm-2 text-white my-5 text-center">
+  <div class="my-3">Profile</div>
+  <h4>{{fname}}</h4>
+
+  {% for group in groups  %}
+  <p>{{group.name}}</p>
+  {% endfor %}
+</div>
+{% endblock side %}
+
+
+
+{% block content %}
+        <div class="col-sm-10 main">
+            <h2 class="my-5 ">Dashbord page</h2>
+           
+            <a href="{% url 'addpost' %}" class="btn btn-success my-2">Add post</a>
+            <h2 class="text-center alert-success text-dark py-2">Show Post Information</h2>
+
+
+                {% if posts %}
+            <table class="table mt-5 bg-white table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col" style="width:2%" >Id</th>
+                    <th scope="col" style="width:28%">Title</th>
+                    <th scope="col" style="width:55%">Description</th>
+                    <th scope="col" style="width:15%">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for post in posts  %}
+                  <tr>
+                    <th scope="row">{{post.id}}</th>
+                    <td>{{post.title}}</td>
+                    <td>{{post.desc}}</td>
+                    <td>
+                        <a href="{% url 'updatepost' post.id %}" class="btn btn-warning btn-sm">Edit</a>
+                        
+                        {% if perms.blog.delete_post %}
+
+                          <form action="{% url 'deletepost' post.id %}" method="post" class="d-inline">
+                            {% csrf_token %}
+                              <input type="submit" value="Delete" class="btn btn-danger btn-sm">
+                          </form>
+                        {% endif %}
+                    </td>
+                  
+                  </tr>
+
+                  {% endfor %}
+                </tbody>
+              </table>
+
+              {% else %}
+              <div class="alert alert-danger" role="alert">
+                No Records..... please <a href="{% url 'addpost' %}" class="alert-link">Add post</a> to click here
+              </div>
+
+            {% endif %}
+        </div>    
+{% endblock content %}
